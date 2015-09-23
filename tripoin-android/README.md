@@ -1,2 +1,2 @@
-# tripoin-adnroid
+# tripoin-android
 Repository For Android Apps
