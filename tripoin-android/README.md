@@ -14,16 +14,16 @@ Development Guide
         - General Constant : Dispesifikasikan untuk kebutuhan constant secara umum. ie : punctuation, binary values.
     - dto : dto basic aplikasi. digunakan untuk bridging error message dari low level authentication ke high level application. ie : bridging error message dari validasi password menggunakan regex, etc. Setiap dto dalam aplikasi ini harus mengimplementasikan PARCELABLE interface. Karena arsitektur PARCELABLE memungkinkan transfer data yang 10 kali lebih cepat dari SERIALIZABLE. untuk mengimplementasi PARCELABLE, developer hanya perlu menambahkan anotasi "@Parcel" diatas nama class dto tsb.
     - error : Interface untuk listener error low level ke high level. listener ini harus dikombinasikan dengan dto diatas. Interface ini harus menjadi constructor pada class yang membutuhkan.
+    - util : package class untuk util yang bersifat common, seperti validation dan converter data. GeneralValidation digunakan untuk validasi variable, GeneralConverter digunakan untuk konversi data variable.
 
-#Contoh implementasi Parcelable pada class - class DTO.
+###Contoh implementasi Parcelable pada class - class DTO.
 ```sh
 @Parcel
 public class CLAZZ{
 }
 ```
-#Contoh implementasi error listener.
+###Contoh implementasi error listener.
 ```sh
-@Parcel
 public class ERROR_APP{
     private IErrorListener errorListener;
     public ERROR_APP(IErrorListener errorListener){
@@ -40,4 +40,41 @@ public class ERROR_APP{
 }
 ```
 Saat error terjadi pada exception diatas, maka errorListener akan bridging message error ke high level application untuk ditampilkan atau diolah lagi.
-3. 
+
+3. tripoin-component
+    - Penempatan asset di folder assets. ie: image, sound, font etc.
+    - image : package untuk handle image processing
+    - sound : package untuk handle sound processing
+    - ui : package untuk handle basic ui component ( screen ). ie : fragment, activity, dialog. setiap view baik activity, fragment atau dialog harus menggunakan injeksi widget- widgetnya menggunakan butterknife (@InjectView). Kemudian, untuk action listenernya juga menggunakan butterknife. ie (@OnClick).
+
+###Setiap activity harus extends terhadap ABaseActivity, Contoh :
+```sh
+public class EXAMPLE_ACTIVITY extends ABaseActivty{
+
+@InjectView(R.id.txtTitle) public TextView txtTitle;
+
+    String myName;
+
+    @Override
+    public void initWidget() {
+        myName = "Activity Login";
+        txtTitle.setText(myName);
+    }
+
+    @Override
+    public int getViewLayoutId() {
+        return R.layout.activity_login;
+    }
+    
+    @Override
+    public void goToMainView(String extraKey, String extraContent) {
+    }
+
+    @OnClick(R.id.txtTitle)
+    public void onTitleClick(){
+        Toast.makeText(this, "Clicked ".concat(myName),Toast.LENGTH_SHORT).show();
+        gotoNextActivity(ActivityMain.class, "", "");
+    }
+}
+```
+###Setiap fragment harus extends terhadap ABaseFragment.
