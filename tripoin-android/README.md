@@ -3,11 +3,11 @@ Repository For Android Apps
 
 Development Guide 
 ==================
-1. Code convention
+###Code convention
 	- Interface harus diawali dengan prefix I. contoh IGenericDAO
 	- Abstract class harus diawali dengan prefix A. contoh AGenericDAO
 	- Package untuk class - class implementasi harus berada dalam subclass dari package interface, dengan nama impl
-2. tripoin-common
+###tripoin-common
     - component : Interface yang digunakan untuk melakukan proses dalam sebuah class yang mengimplementasi. Class implementasi nantinya diharuskan men-set parameter input, parameter output. override  method process untuk detail masing- masing proses di class implementasinya.
     - constant : Interface yang digunakan untuk constant variable dalam aplikasi. Karena android bersifat "configurable by database" maka dari itu constant lebih diarahkan ke dalam bentuk variable dalam interface. Jika diperlukan konfigurasi yang lebih dinamis, lebih baik menggunakan local database yang datanya diperolah dari REST.
         - Application Constant : Dispesifikasikan untuk constant kebutuhan aplikasi. ie : basic host, basic port. 
@@ -16,13 +16,13 @@ Development Guide
     - error : Interface untuk listener error low level ke high level. listener ini harus dikombinasikan dengan dto diatas. Interface ini harus menjadi constructor pada class yang membutuhkan.
     - util : package class untuk util yang bersifat common, seperti validation dan converter data. GeneralValidation digunakan untuk validasi variable, GeneralConverter digunakan untuk konversi data variable.
 
-###Contoh implementasi Parcelable pada class - class DTO.
+####Contoh implementasi Parcelable pada class - class DTO.
 ```sh
 @Parcel
 public class CLAZZ{
 }
 ```
-###Contoh implementasi error listener.
+####Contoh implementasi error listener.
 ```sh
 public class ERROR_APP{
     private IErrorListener errorListener;
@@ -41,13 +41,13 @@ public class ERROR_APP{
 ```
 Saat error terjadi pada exception diatas, maka errorListener akan bridging message error ke high level application untuk ditampilkan atau diolah lagi.
 
-3. tripoin-component
+###tripoin-component
     - Penempatan asset di folder assets. ie: image, sound, font etc.
     - image : package untuk handle image processing
     - sound : package untuk handle sound processing
     - ui : package untuk handle basic ui component ( screen ). ie : fragment, activity, dialog. setiap view baik activity, fragment atau dialog harus menggunakan injeksi widget- widgetnya menggunakan butterknife (@InjectView). Kemudian, untuk action listenernya juga menggunakan butterknife. ie (@OnClick).
 
-###Setiap activity harus extends terhadap ABaseActivity, Contoh :
+####Setiap activity harus extends terhadap ABaseActivity, Contoh :
 ```sh
 public class EXAMPLE_ACTIVITY extends ABaseActivty{
 
@@ -77,4 +77,5 @@ public class EXAMPLE_ACTIVITY extends ABaseActivty{
     }
 }
 ```
-###Setiap fragment harus extends terhadap ABaseFragment.
+####Setiap fragment harus extends terhadap ABaseFragment.
+4. asda
