@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author <a href="fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Parcel
-public class DTOPasswordValidMessenger implements Serializable {
+public class DTOPasswordValidMessenger{
 
     private String message;
 
