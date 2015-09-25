@@ -3,10 +3,10 @@ Repository For Android Apps
 
 Development Guide 
 ==================
-## Code convention
-	* Interface harus diawali dengan prefix I. contoh IGenericDAO
-	* Abstract class harus diawali dengan prefix A. contoh AGenericDAO
-	* Package untuk class - class implementasi harus berada dalam subclass dari package interface, dengan nama impl
+* Code convention
+	- Interface harus diawali dengan prefix I. contoh IGenericDAO
+	- Abstract class harus diawali dengan prefix A. contoh AGenericDAO
+	- Package untuk class - class implementasi harus berada dalam subclass dari package interface, dengan nama impl
 * tripoin-common
     - component : Interface yang digunakan untuk melakukan proses dalam sebuah class yang mengimplementasi. Class implementasi nantinya diharuskan men-set parameter input, parameter output. override  method process untuk detail masing- masing proses di class implementasinya.
     - constant : Interface yang digunakan untuk constant variable dalam aplikasi. Karena android bersifat "configurable by database" maka dari itu constant lebih diarahkan ke dalam bentuk variable dalam interface. Jika diperlukan konfigurasi yang lebih dinamis, lebih baik menggunakan local database yang datanya diperolah dari REST.
@@ -77,4 +77,32 @@ public class EXAMPLE_ACTIVITY extends ABaseActivty{
     }
 }
 ```
-####Setiap fragment harus extends terhadap ABaseFragment.
+####Setiap fragment harus extends terhadap ABaseFragment/ ABaseNavDrawerFragment.Contoh :
+```sh
+public class FragmentSample extends ABaseNavigationDrawerFragment {
+
+    @InjectView(R.id.txtSample) public TextView txtSample;
+
+    private String m_data;
+
+    @Override
+    public String getFragmentTitle() {
+        return null;
+    }
+
+    @Override
+    public void initWidget() {
+        m_data = "Sample Fragment";
+    }
+
+    @Override
+    public int getViewLayoutId() {
+        return 0;
+    }
+
+    @OnClick(R.id.txtSample)
+    public void onClickSample(){
+        Toast.makeText(getActivity(), "Clicked ".concat(m_data), Toast.LENGTH_SHORT).show();
+    }
+}
+```
