@@ -7,7 +7,14 @@ Development Guide
 	- Interface harus diawali dengan prefix I. contoh IGenericDAO
 	- Abstract class harus diawali dengan prefix A. contoh AGenericDAO
 	- Package untuk class - class implementasi harus berada dalam subclass dari package interface, dengan nama impl
-	- Setiap akronim nama class, harus diberi prefix Uppper Case, ie : DAOUser, DTOUser, etc	
+	- Setiap akronim nama class, harus diberi prefix Uppper Case, ie : DAOUser.java, DTOUser, etc	
+	- Activity harus diberi prefix Activity, ie : ActivityLogin.java
+	- Fragment harus diberi prefix Fragment, ie : FragmentHome.java
+	- EndPoint harus diberi Prefix EP, ie : EPLogin.java
+	- BackgroundProcess harus diberi Prefix BGP, ie : BGPLogin.java
+	- CallBack harus diberi prefix CB, ie : CBLogin.java
+	- Model harus diberi prefix Model, ie : ModelUser.java
+	
 * tripoin-common
     - component : Interface yang digunakan untuk melakukan proses dalam sebuah class yang mengimplementasi. Class implementasi nantinya diharuskan men-set parameter input, parameter output. override  method process untuk detail masing- masing proses di class implementasinya.
     - constant : Interface yang digunakan untuk constant variable dalam aplikasi. Karena android bersifat "configurable by database" maka dari itu constant lebih diarahkan ke dalam bentuk variable dalam interface. Jika diperlukan konfigurasi yang lebih dinamis, lebih baik menggunakan local database yang datanya diperolah dari REST.
@@ -151,3 +158,29 @@ public class DAOUser extends ABaseGenericDAO {
 }
 
 ```
+* tripoin-rest
+    - Modul untuk akses API melalui RESTFull Web Service
+    - Cara membuat endpoint adalah sbb :
+        -  Buat DTO Request dan Response
+        -  Buat PostProcess dari DTO tersebut
+        -  Buat CallBack dari PostProcess
+        -  Buat EndPoint dari CallBack
+        -  Buat BackgroundProcess dari CallBack
+        
+####Contoh EndPoint dengan POST
+```sh
+public interface EPLogin {
+
+    @POST("/login/")
+    void login(@Body DTOLoginRequest dtoLoginRequest, Callback<DTOLogin> callBackDTOLogin);
+}
+
+```
+
+* tripoin-service
+    - Modul untuk service / scheduler aplikasi
+
+* tripoin-util
+    - Modul untuk utilities class aplikasi
+
+#HAPPY CODING :D
