@@ -7,6 +7,7 @@ Development Guide
 	- Interface harus diawali dengan prefix I. contoh IGenericDAO
 	- Abstract class harus diawali dengan prefix A. contoh AGenericDAO
 	- Package untuk class - class implementasi harus berada dalam subclass dari package interface, dengan nama impl
+	- Setiap akronim nama class, harus diberi prefix Uppper Case, ie : DAOUser, DTOUser, etc	
 * tripoin-common
     - component : Interface yang digunakan untuk melakukan proses dalam sebuah class yang mengimplementasi. Class implementasi nantinya diharuskan men-set parameter input, parameter output. override  method process untuk detail masing- masing proses di class implementasinya.
     - constant : Interface yang digunakan untuk constant variable dalam aplikasi. Karena android bersifat "configurable by database" maka dari itu constant lebih diarahkan ke dalam bentuk variable dalam interface. Jika diperlukan konfigurasi yang lebih dinamis, lebih baik menggunakan local database yang datanya diperolah dari REST.
@@ -79,7 +80,7 @@ public class EXAMPLE_ACTIVITY extends ABaseActivty{
 ```
 ####Setiap fragment harus extends terhadap ABaseFragment/ ABaseNavDrawerFragment.Contoh :
 ```sh
-public class FragmentSample extends ABaseNavigationDrawerFragment {
+public class FRAGMENT_SAMPLE extends ABaseNavigationDrawerFragment {
 
     @InjectView(R.id.txtSample) public TextView txtSample;
 
@@ -105,4 +106,48 @@ public class FragmentSample extends ABaseNavigationDrawerFragment {
         Toast.makeText(getActivity(), "Clicked ".concat(m_data), Toast.LENGTH_SHORT).show();
     }
 }
+```
+
+* tripoin-model
+    - Setiap model harus ditandai sebagai bagian orm dengan anotasi "@DatabaseTable"
+    - Model tidak boleh mengimplementasikan PARCELABLE/ SERIALIZABLE karena data model tidak boleh ditransfer. Apabila membutuhkan transfer data dari data model dapat menggunakan DTO dengan implementasi PARCELABLE.
+    - Setiap Model harus didaftarkan dalam Modul tripoin-dao(DAOHelper) pada even onCreate() dan event onUpdate()
+     
+####Contoh model :
+```sh
+@DatabaseTable(tableName = ApplicationConstant.Database.TableUser.TABLE_NAME)
+public class ModelUser {
+    @DatabaseField(generatedId = true, canBeNull = false, columnName = ApplicationConstant.Database.ID)
+    private int id;
+
+    @DatabaseField(columnName = ApplicationConstant.Database.TableUser.USER_NAME)
+    private String userName;
+
+    @DatabaseField(columnName = ApplicationConstant.Database.TableUser.LOGIN_STATUS)
+    private int loginStatus;
+
+    @DatabaseField(columnName = ApplicationConstant.Database.TableUser.IS_ACTIVE)
+    private int isActive;
+
+    //getter - setter
+	//toString if necessary
+}
+```
+
+* tripoin-dao
+    - Modul Data Access Object (DAO) berpusat pada DAOHelper pada inisiasi database
+    - DAO yang akan ditambahkan harus extends terhadap ABaseGenericDAO
+   
+####Contoh DAO 
+```sh
+public class DAOUser extends ABaseGenericDAO {
+    public DAOUser(Context ctx) {
+        super(ctx);
+    }
+    @Override
+    public Class getModelClass() {
+        return ModelUser.class;
+    }
+}
+
 ```
