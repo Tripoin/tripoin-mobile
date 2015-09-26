@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    /*Material Design Support*/
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
+
+    /*UI DI*/
+    compile 'com.jakewharton:butterknife:6.1.0'
+
+    /*Card Library*/
+    compile 'com.github.gabrielemariotti.cards:library:1.9.1'
+    compile 'com.github.gabrielemariotti.cards:library-extra:1.9.1'
+
+    /*Round Image View*/
+    compile 'com.makeramen:roundedimageview:2.0.1'
+
+    /*Image Slider*/
+    compile 'com.daimajia.slider:library:1.1.2@aar'
+    compile 'com.daimajia.androidanimations:library:1.0.3@aar'
+
+    /*Picassa Image Loader*/
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    /*Ultra Pull to Refresh*/
+    compile 'in.srain.cube:ultra-ptr:1.0.9@aar'
+    compile project(':tripoin-common')
+}
